@@ -1,18 +1,22 @@
-<section class="container">
-    <h2>Votre Panier</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Produit</th>
-                <th>Quantité</th>
-                <th>Prix</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="cart-table"></tbody>
-    </table>
-    <div style="text-align: right; margin-top: 20px;">
-        <h3>Total: <span id="cart-total">0</span> €</h3>
-        <button class="btn-add" onclick="goToCheckout()" style="width: auto; padding: 10px 40px;">Passer à la commande</button>
-    </div>
-</section>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><title>Votre Panier | ICONOGRAPHIE</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="glass-header"><nav class="container"><div class="logo">ICONO<span>GRAPHIE</span></div><a href="index.html" style="color:white">← Retour Boutique</a></nav></header>
+    <main class="container">
+        <table>
+            <thead><tr><th>Produit</th><th>Quantité</th><th>Prix</th><th>Action</th></tr></thead>
+            <tbody id="cart-table"></tbody>
+        </table>
+        <div style="text-align:right">
+            <h2>Total : <span id="cart-total">0 €</span></h2><br>
+            <a href="checkout.html" class="btn-main">Passer au paiement sécurisé</a>
+        </div>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
