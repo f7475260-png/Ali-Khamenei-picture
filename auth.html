@@ -1,0 +1,21 @@
+<section class="form-container">
+    <div id="login-form">
+        <h2>Connexion</h2>
+        <form onsubmit="handleLogin(event)">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <button type="submit" class="btn-add">Se connecter</button>
+        </form>
+        <p style="margin-top:10px">Pas de compte ? <a href="#" onclick="document.getElementById('login-form').style.display='none'; document.getElementById('signup-form').style.display='block'">S'inscrire</a></p>
+    </div>
+
+    <div id="signup-form" style="display:none">
+        <h2>Inscription</h2>
+        <form onsubmit="handleSignup(event)">
+            <input type="text" name="firstName" placeholder="Prénom" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <button type="submit" class="btn-add">Créer un compte</button>
+        </form>
+    </div>
+</section>
