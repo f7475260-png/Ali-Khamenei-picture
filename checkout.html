@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><title>Paiement Sécurisé | ICONOGRAPHIE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width:600px; margin-top:100px">
+        <h1 style="font-family:Cinzel; text-align:center">Finaliser l'acquisition</h1>
+        <form onsubmit="processPayment(event)" style="background:var(--glass); padding:40px; border:1px solid var(--border); margin-top:30px">
+            <label>Nom sur la carte</label><input type="text" required style="width:100%; padding:10px; margin:10px 0; background:none; border:1px solid var(--border); color:white">
+            <label>Numéro de carte</label><input type="text" placeholder="**** **** **** ****" required style="width:100%; padding:10px; margin:10px 0; background:none; border:1px solid var(--border); color:white">
+            <div style="display:flex; gap:20px">
+                <input type="text" placeholder="MM/YY" required style="width:50%; padding:10px; margin:10px 0; background:none; border:1px solid var(--border); color:white">
+                <input type="text" placeholder="CVC" required style="width:50%; padding:10px; margin:10px 0; background:none; border:1px solid var(--border); color:white">
+            </div>
+            <button type="submit" class="btn-main" style="width:100%; margin-top:20px">Payer Maintenant</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
