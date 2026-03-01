@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iconographie Suprême - Boutique</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">ICONOGRAPHIE <span>SUPRÊME</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Boutique</a></li>
+                <li id="auth-link"><a href="auth.html">Connexion</a></li>
+                <li><a href="cart.html" class="cart-icon">Panier (<span id="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Collection Photographique</h1>
+            <p>Cette boutique propose une collection de photographies en hommage à Ali Khamenei. Les images présentées mettent en avant des portraits et des moments symboliques, destinés à un usage iconographique ou documentaire.</p>
+        </section>
+
+        <div class="filters">
+            <button onclick="filterProducts('tous')">Tous</button>
+            <button onclick="filterProducts('portrait')">Portraits</button>
+            <button onclick="filterProducts('evenement')">Événements</button>
+        </div>
+
+        <div id="product-grid" class="product-grid">
+            </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2024 Iconographie Suprême. Tous droits réservés.</p>
+            <div class="footer-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">Confidentialité</a>
+                <a href="mailto:contact@example.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
