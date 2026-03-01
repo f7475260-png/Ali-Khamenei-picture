@@ -3,23 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iconographie Suprême | Collection Privée</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>ICONOGRAPHIE | Collection Exclusive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="loader" class="loader"></div>
-
     <header class="glass-header">
         <nav class="container">
             <div class="logo">ICONO<span>GRAPHIE</span></div>
             <ul class="nav-links">
-                <li><a href="#boutique">Galerie</a></li>
+                <li><a href="index.html">Galerie</a></li>
                 <li id="auth-zone">
                     <button id="google-login" class="btn-google">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
-                        Accès Membre
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G"> Accès Membre
                     </button>
                 </li>
                 <li><a href="cart.html" class="cart-trigger">🛒 <span id="cart-count">0</span></a></li>
@@ -29,20 +26,40 @@
 
     <main>
         <section class="hero-premium">
-            <h1 class="fade-in">L'Excellence Visuelle</h1>
-            <p class="fade-in-delay">Une immersion documentaire unique à travers l'objectif.</p>
-            <div class="scroll-indicator"></div>
+            <div class="hero-content fade-in">
+                <h1>L'Excellence Iconographique</h1>
+                <p>Une collection photographique unique, capturant des moments de symbolisme et d'histoire.</p>
+                <a href="#boutique" class="btn-main">Explorer la Galerie</a>
+            </div>
         </section>
 
-        <section id="boutique" class="container">
+        <section id="boutique" class="container section-padding">
             <div class="section-header">
-                <h2>Collection Iconographique</h2>
+                <h2>La Collection</h2>
                 <div class="filter-bar">
-                    </div>
+                    <button onclick="filterProducts('tous')" class="filter-btn active">Tous</button>
+                    <button onclick="filterProducts('portrait')" class="filter-btn">Portraits</button>
+                    <button onclick="filterProducts('evenement')" class="filter-btn">Événements</button>
+                </div>
             </div>
-            <div id="product-grid" class="war-grid"></div>
+            <div id="product-grid" class="war-grid">
+                </div>
         </section>
     </main>
+
+    <footer class="glass-footer">
+        <div class="container footer-grid">
+            <div>
+                <div class="logo">ICONO<span>GRAPHIE</span></div>
+                <p>Hommage visuel et documentaire.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Mentions Légales</a>
+                <a href="#">Confidentialité</a>
+                <a href="mailto:contact@exemple.com">Contact</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
