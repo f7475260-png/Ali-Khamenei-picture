@@ -3,49 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iconographie Suprême - Boutique</title>
+    <title>Iconographie Suprême | Collection Privée</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
+    <div id="loader" class="loader"></div>
+
+    <header class="glass-header">
         <nav class="container">
-            <div class="logo">ICONOGRAPHIE <span>SUPRÊME</span></div>
+            <div class="logo">ICONO<span>GRAPHIE</span></div>
             <ul class="nav-links">
-                <li><a href="index.html">Boutique</a></li>
-                <li id="auth-link"><a href="auth.html">Connexion</a></li>
-                <li><a href="cart.html" class="cart-icon">Panier (<span id="cart-count">0</span>)</a></li>
+                <li><a href="#boutique">Galerie</a></li>
+                <li id="auth-zone">
+                    <button id="google-login" class="btn-google">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                        Accès Membre
+                    </button>
+                </li>
+                <li><a href="cart.html" class="cart-trigger">🛒 <span id="cart-count">0</span></a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="container">
-        <section class="hero">
-            <h1>Collection Photographique</h1>
-            <p>Cette boutique propose une collection de photographies en hommage à Ali Khamenei. Les images présentées mettent en avant des portraits et des moments symboliques, destinés à un usage iconographique ou documentaire.</p>
+    <main>
+        <section class="hero-premium">
+            <h1 class="fade-in">L'Excellence Visuelle</h1>
+            <p class="fade-in-delay">Une immersion documentaire unique à travers l'objectif.</p>
+            <div class="scroll-indicator"></div>
         </section>
 
-        <div class="filters">
-            <button onclick="filterProducts('tous')">Tous</button>
-            <button onclick="filterProducts('portrait')">Portraits</button>
-            <button onclick="filterProducts('evenement')">Événements</button>
-        </div>
-
-        <div id="product-grid" class="product-grid">
+        <section id="boutique" class="container">
+            <div class="section-header">
+                <h2>Collection Iconographique</h2>
+                <div class="filter-bar">
+                    </div>
             </div>
+            <div id="product-grid" class="war-grid"></div>
+        </section>
     </main>
 
-    <footer>
-        <div class="container footer-content">
-            <p>&copy; 2024 Iconographie Suprême. Tous droits réservés.</p>
-            <div class="footer-links">
-                <a href="#">Mentions Légales</a>
-                <a href="#">Confidentialité</a>
-                <a href="mailto:contact@example.com">Contact</a>
-            </div>
-        </div>
-    </footer>
-
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="app.js"></script>
 </body>
 </html>
