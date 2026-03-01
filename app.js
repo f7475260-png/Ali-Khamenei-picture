@@ -1,47 +1,51 @@
-// 1. Catalogue de produits
-const products = [
-    { id: 1, title: "Portrait Officiel", category: "portrait", price: 45, desc: "Tirage argentique haute qualité.", img: "https://via.placeholder.com/300x400?text=Portrait+1" },
-    { id: 2, title: "Moment de Prière", category: "evenement", price: 35, desc: "Scène symbolique de recueillement.", img: "https://via.placeholder.com/300x400?text=Priére" },
-    { id: 3, title: "Discours Solennel", category: "evenement", price: 50, desc: "Capture d'un discours public historique.", img: "https://via.placeholder.com/300x400?text=Discours" },
-    { id: 4, title: "Regard Serein", category: "portrait", price: 40, desc: "Gros plan détaillé, éclairage naturel.", img: "https://via.placeholder.com/300x400?text=Regard" },
-    { id: 5, title: "Rencontre Diplomatique", category: "evenement", price: 55, desc: "Photo d'archive en noir et blanc.", img: "https://via.placeholder.com/300x400?text=Archive" },
-    { id: 6, title: "Sagesse et Étude", category: "portrait", price: 38, desc: "Portrait dans une bibliothèque.", img: "https://via.placeholder.com/300x400?text=Etude" },
-];
+// --- CONFIGURATION FIREBASE ---
+const firebaseConfig = {
+    apiKey: "VOTRE_API_KEY",
+    authDomain: "VOTRE_ID.firebaseapp.com",
+    projectId: "VOTRE_ID",
+    storageBucket: "VOTRE_ID.appspot.com",
+    messagingSenderId: "VOTRE_SENDER_ID",
+    appId: "VOTRE_APP_ID"
+};
 
-// 2. Gestion du Panier (localStorage)
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-
-// Initialisation
-document.addEventListener('DOMContentLoaded', () => {
-    updateUI();
-    if (document.getElementById('product-grid')) renderProducts(products);
-    if (document.getElementById('cart-table')) renderCart();
-    if (document.getElementById('welcome-user')) {
-        document.getElementById('welcome-user').innerText = currentUser ? `Bienvenue, ${currentUser.firstName}` : "";
-    }
-});
-
-function updateUI() {
-    const cartCount = document.getElementById('cart-count');
-    if (cartCount) cartCount.innerText = cart.length;
-    
-    const authLink = document.getElementById('auth-link');
-    if (authLink && currentUser) {
-        authLink.innerHTML = `<a href="#" onclick="logout()">${currentUser.firstName} (Déconnexion)</a>`;
-    }
+// Initialisation (si on utilise Firebase)
+if (typeof firebase !== 'undefined') {
+    firebase.initializeApp(firebaseConfig);
+    var auth = firebase.auth();
+    var provider = new firebase.auth.GoogleAuthProvider();
 }
 
-// 3. Fonctions Boutique
+// --- DONNÉES DU CATALOGUE ---
+const products = [
+    { id: 1, title: "Sagesse Éternelle", category: "portrait", price: 65, img: "https://via.placeholder.com/600x800/111/D4AF37?text=PORTRAIT+I" },
+    { id: 2, title: "L'Unité", category: "evenement", price: 45, img: "https://via.placeholder.com/600x800/111/D4AF37?text=EVENT+I" },
+    { id: 3, title: "Regard Visionnaire", category: "portrait", price: 75, img: "https://via.placeholder.com/600x800/111/D4AF37?text=PORTRAIT+II" },
+    { id: 4, title: "Le Discours", category: "evenement", price: 55, img: "https://via.placeholder.com/600x800/111/D4AF37?text=EVENT+II" },
+    { id: 5, title: "Moment de Paix", category: "portrait", price: 50, img: "https://via.placeholder.com/600x800/111/D4AF37?text=PORTRAIT+III" },
+    { id: 6, title: "Héritage", category: "evenement", price: 80, img: "https://via.placeholder.com/600x800/111/D4AF37?text=EVENT+III" }
+];
+
+// --- ÉTAT GLOBAL ---
+let cart = JSON.parse(localStorage.getItem('war_cart')) || [];
+
+// --- INITIALISATION ---
+document.addEventListener('DOMContentLoaded', () => {
+    renderUI();
+    if (document.getElementById('product-grid')) renderProducts(products);
+    if (document.getElementById('cart-table')) renderCart();
+});
+
+// --- FONCTIONS BOUTIQUE ---
 function renderProducts(items) {
     const grid = document.getElementById('product-grid');
     grid.innerHTML = items.map(p => `
-        <div class="product-card">
-            <img src="${p.img}" alt="${p.title}">
-            <h3>${p.title}</h3>
-            <p>${p.desc}</p>
-            <p class="price">${p.price} €</p>
-            <button class="btn-add" onclick="addToCart(${p.id})">Ajouter au panier</button>
+        <div class="product-card fade-in">
+            <img src="${p.img}" alt="${p.title}" loading="lazy">
+            <div class="card-body">
+                <h3>${p.title}</h3>
+                <p class="price">${p.price} €</p>
+                <button class="btn-add" onclick="addToCart(${p.id})">Acquérir cette pièce</button>
+            </div>
         </div>
     `).join('');
 }
@@ -49,90 +53,101 @@ function renderProducts(items) {
 function filterProducts(cat) {
     const filtered = cat === 'tous' ? products : products.filter(p => p.category === cat);
     renderProducts(filtered);
+    
+    // UI Active state
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.toLowerCase() === cat);
+    });
 }
 
 function addToCart(id) {
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateUI();
-    alert("Photo ajoutée au panier !");
+    const p = products.find(prod => prod.id === id);
+    cart.push(p);
+    saveCart();
+    showToast(`${p.title} ajouté au panier`);
 }
 
-// 4. Fonctions Panier
+function saveCart() {
+    localStorage.setItem('war_cart', JSON.stringify(cart));
+    renderUI();
+}
+
+function renderUI() {
+    const count = document.getElementById('cart-count');
+    if (count) count.innerText = cart.length;
+}
+
+// --- GESTION PANIER ---
 function renderCart() {
     const table = document.getElementById('cart-table');
     const totalEl = document.getElementById('cart-total');
     if (cart.length === 0) {
-        table.innerHTML = "<tr><td colspan='4'>Votre panier est vide.</td></tr>";
-        totalEl.innerText = "0";
+        table.innerHTML = "<tr><td colspan='4' style='text-align:center'>Votre collection est vide.</td></tr>";
         return;
     }
-    
+
     let total = 0;
     table.innerHTML = cart.map((item, index) => {
         total += item.price;
         return `
             <tr>
-                <td>${item.title}</td>
+                <td><strong>${item.title}</strong></td>
                 <td>1</td>
                 <td>${item.price} €</td>
-                <td><button onclick="removeFromCart(${index})">Supprimer</button></td>
+                <td><button onclick="removeItem(${index})" class="filter-btn">Retirer</button></td>
             </tr>
         `;
     }).join('');
-    totalEl.innerText = total;
+    totalEl.innerText = total + " €";
 }
 
-function removeFromCart(index) {
+function removeItem(index) {
     cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    saveCart();
     renderCart();
-    updateUI();
 }
 
-function goToCheckout() {
-    if (!currentUser) {
-        alert("Vous devez être connecté pour commander.");
-        window.location.href = "auth.html";
-    } else {
-        window.location.href = "checkout.html";
+// --- AUTHENTIFICATION ---
+const loginBtn = document.getElementById('google-login');
+if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+        auth.signInWithPopup(provider).then(result => {
+            showToast(`Accès autorisé : ${result.user.displayName}`);
+            location.reload();
+        });
+    });
+}
+
+auth.onAuthStateChanged(user => {
+    if (user && document.getElementById('auth-zone')) {
+        document.getElementById('auth-zone').innerHTML = `
+            <div class="user-profile">
+                <img src="${user.photoURL}" class="avatar">
+                <span>${user.displayName.split(' ')[0]}</span>
+                <button onclick="auth.signOut()" style="background:none; border:none; color:var(--accent); cursor:pointer">Quitter</button>
+            </div>
+        `;
     }
+});
+
+// --- UTILITAIRES ---
+function showToast(text) {
+    Toastify({
+        text: text,
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        style: { background: "linear-gradient(to right, #D4AF37, #000)", color: "white" }
+    }).showToast();
 }
 
-// 5. Authentification (Simulée)
-function handleSignup(e) {
-    e.preventDefault();
-    const user = {
-        firstName: e.target.firstName.value,
-        email: e.target.email.value,
-        password: e.target.password.value // En prod, ne jamais stocker en clair !
-    };
-    localStorage.setItem('registeredUser', JSON.stringify(user));
-    alert("Compte créé ! Connectez-vous.");
-    showLogin();
-}
-
-function handleLogin(e) {
-    e.preventDefault();
-    const registered = JSON.parse(localStorage.getItem('registeredUser'));
-    if (registered && registered.email === e.target.email.value && registered.password === e.target.password.value) {
-        localStorage.setItem('currentUser', JSON.stringify(registered));
-        window.location.href = "index.html";
-    } else {
-        alert("Identifiants incorrects.");
-    }
-}
-
-function logout() {
-    localStorage.removeItem('currentUser');
-    window.location.reload();
-}
-
-// Simulation paiement
 function processPayment(e) {
     e.preventDefault();
-    alert("Paiement validé ! Merci pour votre commande.");
-    localStorage.removeItem('cart');
-    window.location.href = "index.html";
+    showToast("Transaction en cours...");
+    setTimeout(() => {
+        alert("Commande confirmée. Vous recevrez un mail de confirmation.");
+        cart = [];
+        saveCart();
+        window.location.href = "index.html";
+    }, 2000);
 }
