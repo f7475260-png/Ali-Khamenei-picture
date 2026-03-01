@@ -54,3 +54,36 @@ td { padding: 20px; border-bottom: 1px solid var(--border); }
 /* Animations */
 .fade-in { animation: fadeIn 1.5s ease-out; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+/* Checkout Specifics */
+.checkout-container { display: flex; flex-direction: column; align-items: center; padding-top: 120px; gap: 40px; }
+
+.card-visual { 
+    width: 350px; height: 200px; 
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    border: 1px solid var(--accent);
+    border-radius: 15px; padding: 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    font-family: 'Share Tech Mono', monospace;
+    position: relative;
+}
+
+.card-chip { width: 45px; height: 35px; background: #c5a059; border-radius: 5px; margin-bottom: 30px; opacity: 0.8; }
+.card-number-display { font-size: 1.4rem; letter-spacing: 2px; margin-bottom: 30px; color: var(--accent); }
+.card-details { display: flex; justify-content: space-between; text-transform: uppercase; font-size: 0.8rem; }
+
+.glass-form { 
+    background: var(--glass); border: 1px solid var(--border); 
+    padding: 30px; width: 100%; max-width: 500px;
+    backdrop-filter: blur(10px);
+}
+
+.input-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+.input-group label { font-size: 0.7rem; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
+.input-group input { 
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    padding: 12px; color: white; font-family: inherit;
+}
+.input-group input:focus { border-color: var(--accent); outline: none; }
+.input-row { display: flex; gap: 20px; }
+
+#pay-button:disabled { opacity: 0.5; cursor: not-allowed; }
