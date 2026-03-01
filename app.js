@@ -151,3 +151,68 @@ function processPayment(e) {
         window.location.href = "index.html";
     }, 2000);
 }
+// --- LOGIQUE INTERACTIVE DE LA CARTE ---
+const cardNameInput = document.getElementById('card-name');
+const cardNumberInput = document.getElementById('card-number');
+const cardExpiryInput = document.getElementById('card-expiry');
+
+if (cardNameInput) {
+    // Mise à jour du nom
+    cardNameInput.addEventListener('input', (e) => {
+        document.getElementById('display-name').innerText = e.target.value.toUpperCase() || "NOM COMPLET";
+    });
+
+    // Formatage et mise à jour du numéro
+    cardNumberInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+        let formattedValue = "";
+        for (let i = 0; i < value.length; i++) {
+            if (i > 0 && i % 4 === 0) formattedValue += " ";
+            formattedValue += value[i];
+        }
+        e.target.value = formattedValue;
+        document.getElementById('display-number').innerText = formattedValue || "#### #### #### ####";
+    });
+
+    // Formatage de la date (MM/YY)
+    cardExpiryInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/[^0-9]/gi, '');
+        if (value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+        document.getElementById('display-expiry').innerText = value || "MM/YY";
+    });
+}
+
+// --- SIMULATION DE PAIEMENT "GUERRE" ---
+function processPayment(e) {
+    e.preventDefault();
+    const btn = document.getElementById('pay-button');
+    
+    // 1. Validation de base
+    const cardNumber = cardNumberInput.value.replace(/\s/g, '');
+    if (cardNumber.length < 16) {
+        showToast("Numéro de carte invalide", "error");
+        return;
+    }
+
+    // 2. Effet visuel de traitement
+    btn.disabled = true;
+    btn.innerText = "CRYPTAGE EN COURS...";
+    
+    setTimeout(() => {
+        btn.innerText = "AUTHENTIFICATION BANCAIRE...";
+        setTimeout(() => {
+            // Succès
+            showToast("PAIEMENT APPROUVÉ", "success");
+            localStorage.removeItem('war_cart'); // Vide le panier
+            
+            // Redirection vers confirmation
+            setTimeout(() => {
+                alert("Acquisition confirmée. Votre pièce iconographique sera expédiée sous 24h.");
+                window.location.href = "index.html";
+            }, 1500);
+        }, 2000);
+    }, 1500);
+}
